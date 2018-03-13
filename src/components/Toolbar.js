@@ -1,15 +1,23 @@
 import React from 'react'
 
-const Toolbar = () => {
+const Toolbar = ({
+  messages,
+  selectAllMessages}) => {
+
+  let unread = messages.filter(message => !message.read);
+  console.log(unread);
+  let selected = messages.filter(message => message.selected);
+  console.log(selected);
+
   return (
     <div className="row toolbar">
       <div className="col-md-12">
         <p className="pull-right">
-          <span className="badge badge">2</span>
+          <span className="badge badge">{unread.length}</span>
           unread messages
         </p>
 
-        <button className="btn btn-default">
+        <button onChange={selectAllMessages} className="btn btn-default">
           <i className="fa fa-square-o"></i>
         </button>
 

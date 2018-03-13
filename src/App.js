@@ -20,10 +20,17 @@ class App extends React.Component {
   }
 
   selectMessage = (event, i) => {
-    console.log(event, i);
     let newState = [...this.state.messages];
     newState[i].selected = !newState[i].selected;
     this.setState({
+      messages: newState
+    })
+  }
+
+  selectAllMessages = (event) => {
+    let newState = [...this.state.messages];
+    // if (!newState[i].selected) newState[i].selected
+    this.setsState({
       messages: newState
     })
   }
@@ -46,7 +53,10 @@ class App extends React.Component {
     console.log(this.state);
     return (
       <div className="Container">
-        <Toolbar />
+        <Toolbar
+          messages={ this.state.messages }
+          selectAll={ this.state.selectAllMessages }
+        />
         <MessageList
           messages={ this.state.messages }
           readMessage={ this.readMessage }

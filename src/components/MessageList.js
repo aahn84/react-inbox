@@ -6,6 +6,7 @@ const MessageList = ({
   readMessage,
   selectMessage,
   starMessage }) => {
+
   return (
     <div>
       { messages.map((message, i) => {
