@@ -1,23 +1,44 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Toolbar from './components/Toolbar'
+import MessageList from './components/MessageList'
 import './App.css';
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: this.props.messages
+      messages: props.messages
     }
   }
 
+  starMessage = (event, i) => {
+    // console.log(event, i);
+    let newState = [...this.state.messages];
+    newState[i].starred = !newState[i].starred;
+    this.setState({
+      messages: newState
+    })
+  }
+
+  readMessage = (event, i) => {
+    let newState = [...this.state.messages];
+    newState[i].read = !newState[i].read;
+    this.setState({
+      messages: newState
+    })
+  }
+
+
   render() {
+    console.log(this.state);
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className="Container">
+        <Toolbar />
+        <MessageList
+          messages={ this.state.messages }
+          starMessage={ this.starMessage }
+          readMessage={ this.readMessage}
+        />
       </div>
     );
   }
