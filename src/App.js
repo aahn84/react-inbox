@@ -11,6 +11,14 @@ class App extends React.Component {
     }
   }
 
+  readMessage = (event, i) => {
+    let newState = [...this.state.messages];
+    newState[i].read = !newState[i].read;
+    this.setState({
+      messages: newState
+    })
+  }
+
   starMessage = (event, i) => {
     // console.log(event, i);
     let newState = [...this.state.messages];
@@ -20,15 +28,6 @@ class App extends React.Component {
     })
   }
 
-  readMessage = (event, i) => {
-    let newState = [...this.state.messages];
-    newState[i].read = !newState[i].read;
-    this.setState({
-      messages: newState
-    })
-  }
-
-
   render() {
     console.log(this.state);
     return (
@@ -36,8 +35,8 @@ class App extends React.Component {
         <Toolbar />
         <MessageList
           messages={ this.state.messages }
-          starMessage={ this.starMessage }
           readMessage={ this.readMessage}
+          starMessage={ this.starMessage }
         />
       </div>
     );

@@ -1,12 +1,16 @@
 import React from 'react'
 
-const Message = ({ message, value, starMessage }) => {
+const Message = ({
+  message,
+  value,
+  readMessage,
+  starMessage }) => {
   // let starIcon = "fa-star-o";
   // if (message.starred) starIcon = "fa-star"
   // console.log(message.starred);
 
   return (
-    <div className="row message read">
+    <div className={message.read ? "row message unread":"row message read"}>
       <div className="col-xs-1">
         <div className="row">
           <div className="col-xs-2">
@@ -19,7 +23,7 @@ const Message = ({ message, value, starMessage }) => {
       </div>
       <div className="col-xs-11">
         <a href="#">
-          { message.subject }
+          {message.subject}
         </a>
       </div>
     </div>
