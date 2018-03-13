@@ -5,9 +5,12 @@ const Toolbar = ({
   selectAllMessages}) => {
 
   let unread = messages.filter(message => !message.read);
-  console.log(unread);
   let selected = messages.filter(message => message.selected);
-  console.log(selected);
+
+  let selectBoxIcon;
+  if (selected.length === 0) selectBoxIcon = "fa fa-square-o";
+  else if (selected.length && selected.length < messages.length) selectBoxIcon = "fa fa-minus-square-o";
+  else selectBoxIcon = "fa fa-check-square-o";
 
   return (
     <div className="row toolbar">
@@ -18,7 +21,7 @@ const Toolbar = ({
         </p>
 
         <button onChange={selectAllMessages} className="btn btn-default">
-          <i className="fa fa-square-o"></i>
+          <i className={selectBoxIcon}></i>
         </button>
 
         <button className="btn btn-default" disabled="disabled">
