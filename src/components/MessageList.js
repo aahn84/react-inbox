@@ -1,7 +1,11 @@
 import React from 'react'
 import Message from './Message'
 
-const MessageList = ({ messages, starMessage }) => {
+const MessageList = ({
+  messages,
+  readMessage,
+  selectMessage,
+  starMessage }) => {
   return (
     <div>
       { messages.map((message, i) => {
@@ -10,7 +14,9 @@ const MessageList = ({ messages, starMessage }) => {
             key={ i }
             value={ i }
             message={ message }
-            starMessage={(e) => {starMessage(e, i)}}
+            readMessage={ (e) => {readMessage(e, i)} }
+            selectMessage={ (e) => {selectMessage(e, i)} }
+            starMessage={ (e) => {starMessage(e, i)} }
           />
         )
       })}

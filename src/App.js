@@ -19,6 +19,15 @@ class App extends React.Component {
     })
   }
 
+  selectMessage = (event, i) => {
+    console.log(event, i);
+    let newState = [...this.state.messages];
+    newState[i].selected = !newState[i].selected;
+    this.setState({
+      messages: newState
+    })
+  }
+
   starMessage = (event, i) => {
     // console.log(event, i);
     let newState = [...this.state.messages];
@@ -28,6 +37,11 @@ class App extends React.Component {
     })
   }
 
+  addLabel = (event, i) => {
+    let newState = [...this.state.messages];
+    console.log(newState[i].labels);
+  }
+
   render() {
     console.log(this.state);
     return (
@@ -35,7 +49,8 @@ class App extends React.Component {
         <Toolbar />
         <MessageList
           messages={ this.state.messages }
-          readMessage={ this.readMessage}
+          readMessage={ this.readMessage }
+          selectMessage={ this.selectMessage }
           starMessage={ this.starMessage }
         />
       </div>
