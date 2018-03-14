@@ -11,7 +11,6 @@ const Message = ({
   let selected = message.selected ? "selected":"";
 
   return (
-    // <div onClick={readMessage} className={`row message ${read} ${selected}`}>
     <div className={`row message ${read} ${selected}`}>
       <div className="col-xs-1">
         <div className="row">
