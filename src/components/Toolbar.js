@@ -3,7 +3,8 @@ import React from 'react'
 const Toolbar = ({
   messages,
   selectAllMessages,
-  deleteMessage
+  deleteMessage,
+  addLabel
 }) => {
 
   let unread = messages.filter(message => !message.read);
@@ -38,21 +39,30 @@ const Toolbar = ({
           Mark As Unread
         </button>
 
-        <select className="form-control label-select" disabled={disabledStatus}>
+        <select className="form-control label-select"
+          disabled={disabledStatus}
+          onChange={addLabel}
+      >
           <option>Apply label</option>
           <option value="dev">dev</option>
           <option value="personal">personal</option>
           <option value="gschool">gschool</option>
         </select>
 
-        <select className="form-control label-select" disabled={disabledStatus}>
+        <select className="form-control label-select"
+          disabled={disabledStatus}
+          onChange={addLabel}
+        >
           <option>Remove label</option>
           <option value="dev">dev</option>
           <option value="personal">personal</option>
           <option value="gschool">gschool</option>
         </select>
 
-        <button onClick={deleteMessage} className="btn btn-default" disabled={disabledStatus}>
+        <button
+          className="btn btn-default" onClick={deleteMessage}
+          disabled={disabledStatus}
+        >
           <i className="fa fa-trash-o"></i>
         </button>
       </div>

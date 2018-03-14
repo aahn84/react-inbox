@@ -33,12 +33,12 @@ class App extends React.Component {
     const filterSelected = newState.filter(item =>  item.selected);
 
     if (filterSelected.length === newState.length) {
-      newState.forEach(item => {
-        item.selected = false;
+      newState.forEach(message => {
+        message.selected = false;
       })
     } else {
-      newState.forEach(item => {
-        item.selected = true;
+      newState.forEach(message => {
+        message.selected = true;
       })
     }
 
@@ -57,14 +57,38 @@ class App extends React.Component {
 
   deleteMessage = (event, i) => {
     let newState = [...this.state.messages];
-    newState = newState.filter(item => !item.selected);
+    newState = newState.filter(message => !message.selected);
     this.setState({
       messages: newState
     })
   }
 
-  // addLabel = (event, i) => {
-  //   let newState = [...this.state.messages];
+  addLabel = (event, i) => {
+    let label;
+    if (event.target.value !== 'Apply label') label = event.target.value;
+    
+    let newState = [...this.state.messages];
+    newState = newState.map(message => {
+      if (message.selected && !message.labels.includes(label)) {
+        message.labels.push(label);
+      }
+      return message;
+    })
+    this.setState({
+      messages: newState
+    })
+  }
+  // applyLabel = (e) => {
+  //   let newState = [ ...this.state.messages ];
+  //   newState = newState.map(message => {
+  //     if (message.selected && !message.labels.includes(e.target.value)) {
+  //       message.labels.push(e.target.value);
+  //     }
+  //     return message;
+  //   });
+  //   this.setState({
+  //     messages: newState
+  //   });
   // }
 
   render() {
@@ -75,6 +99,7 @@ class App extends React.Component {
           messages={ this.state.messages }
           selectAllMessages={ this.selectAllMessages }
           deleteMessage={ this.deleteMessage }
+          addLabel={ this.addLabel }
         />
         <MessageList
           messages={ this.state.messages }
