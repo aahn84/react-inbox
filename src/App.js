@@ -55,6 +55,28 @@ class App extends React.Component {
     })
   }
 
+  markAsRead = (event) => {
+    let newState = [...this.state.messages];
+    newState = newState.map(message => {
+      if (message.selected) message.read = true;
+      return message;
+    });
+    this.setState({
+      messages: newState
+    })
+  }
+
+  markAsUnread = (event) => {
+    let newState = [...this.state.messages];
+    newState = newState.map(message => {
+      if (message.selected) message.read = false;
+      return message;
+    })
+    this.setState({
+      messages: newState
+    })
+  }
+
   deleteMessage = (event) => {
     let newState = [...this.state.messages];
     newState = newState.filter(message => !message.selected);
@@ -102,6 +124,8 @@ class App extends React.Component {
         <Toolbar
           messages={ this.state.messages }
           selectAllMessages={ this.selectAllMessages }
+          markAsRead={ this.markAsRead }
+          markAsUnread={ this.markAsUnread }
           deleteMessage={ this.deleteMessage }
           applyLabel={ this.applyLabel }
           removeLabel={ this.removeLabel }

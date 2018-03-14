@@ -3,6 +3,8 @@ import React from 'react'
 const Toolbar = ({
   messages,
   selectAllMessages,
+  markAsRead,
+  markAsUnread,
   deleteMessage,
   applyLabel,
   removeLabel
@@ -32,11 +34,19 @@ const Toolbar = ({
           <i className={selectBoxIcon}></i>
         </button>
 
-        <button className="btn btn-default" disabled={disabledStatus}>
+        <button
+          className="btn btn-default"
+          disabled={disabledStatus}
+          onClick={markAsRead}
+        >
           Mark As Read
         </button>
 
-        <button className="btn btn-default" disabled={disabledStatus}>
+        <button
+          className="btn btn-default"
+          disabled={disabledStatus}
+          onClick={markAsUnread}
+        >
           Mark As Unread
         </button>
 
