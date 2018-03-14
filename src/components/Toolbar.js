@@ -2,7 +2,8 @@ import React from 'react'
 
 const Toolbar = ({
   messages,
-  selectAllMessages
+  selectAllMessages,
+  deleteMessage
 }) => {
 
   let unread = messages.filter(message => !message.read);
@@ -12,6 +13,10 @@ const Toolbar = ({
   if (selected.length === 0) selectBoxIcon = "fa fa-square-o";
   else if (selected.length && selected.length < messages.length) selectBoxIcon = "fa fa-minus-square-o";
   else selectBoxIcon = "fa fa-check-square-o";
+
+  let disabledStatus;
+  if (selected) disabledStatus = "";
+  else disabledStatus = "disabled"
 
   return (
     <div className="row toolbar">
@@ -25,29 +30,29 @@ const Toolbar = ({
           <i className={selectBoxIcon}></i>
         </button>
 
-        <button className="btn btn-default" disabled="disabled">
+        <button className="btn btn-default" disabled={disabledStatus}>
           Mark As Read
         </button>
 
-        <button className="btn btn-default" disabled="disabled">
+        <button className="btn btn-default" disabled={disabledStatus}>
           Mark As Unread
         </button>
 
-        <select className="form-control label-select" disabled="disabled">
+        <select className="form-control label-select" disabled={disabledStatus}>
           <option>Apply label</option>
           <option value="dev">dev</option>
           <option value="personal">personal</option>
           <option value="gschool">gschool</option>
         </select>
 
-        <select className="form-control label-select" disabled="disabled">
+        <select className="form-control label-select" disabled={disabledStatus}>
           <option>Remove label</option>
           <option value="dev">dev</option>
           <option value="personal">personal</option>
           <option value="gschool">gschool</option>
         </select>
 
-        <button className="btn btn-default" disabled="disabled">
+        <button onClick={deleteMessage} className="btn btn-default" disabled={disabledStatus}>
           <i className="fa fa-trash-o"></i>
         </button>
       </div>

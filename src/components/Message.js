@@ -4,7 +4,8 @@ const Message = ({
   message,
   readMessage,
   selectMessage,
-  starMessage }) => {
+  starMessage
+}) => {
 
   let read = message.read ? "read":"unread";
   let selected = message.selected ? "selected":"";

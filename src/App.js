@@ -31,7 +31,7 @@ class App extends React.Component {
     let newState = [...this.state.messages];
 
     const filterSelected = newState.filter(item =>  item.selected);
-    
+
     if (filterSelected.length === newState.length) {
       newState.forEach(item => {
         item.selected = false;
@@ -48,7 +48,6 @@ class App extends React.Component {
   }
 
   starMessage = (event, i) => {
-    // console.log(event, i);
     let newState = [...this.state.messages];
     newState[i].starred = !newState[i].starred;
     this.setState({
@@ -56,10 +55,17 @@ class App extends React.Component {
     })
   }
 
-  addLabel = (event, i) => {
+  deleteMessage = (event, i) => {
     let newState = [...this.state.messages];
-    console.log(newState[i].labels);
+    newState = newState.filter(item => !item.selected);
+    this.setState({
+      messages: newState
+    })
   }
+
+  // addLabel = (event, i) => {
+  //   let newState = [...this.state.messages];
+  // }
 
   render() {
     console.log(this.state);
@@ -68,6 +74,7 @@ class App extends React.Component {
         <Toolbar
           messages={ this.state.messages }
           selectAllMessages={ this.selectAllMessages }
+          deleteMessage={ this.deleteMessage }
         />
         <MessageList
           messages={ this.state.messages }
