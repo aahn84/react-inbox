@@ -28,11 +28,20 @@ class App extends React.Component {
   }
 
   selectAllMessages = (event) => {
-    console.log(event);
     let newState = [...this.state.messages];
-    newState.forEach(item => {
-      item.selected = true;
-    })
+
+    const filterSelected = newState.filter(item =>  item.selected);
+    
+    if (filterSelected.length === newState.length) {
+      newState.forEach(item => {
+        item.selected = false;
+      })
+    } else {
+      newState.forEach(item => {
+        item.selected = true;
+      })
+    }
+
     this.setState({
       messages: newState
     })
