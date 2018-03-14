@@ -4,7 +4,8 @@ const Toolbar = ({
   messages,
   selectAllMessages,
   deleteMessage,
-  addLabel
+  applyLabel,
+  removeLabel
 }) => {
 
   let unread = messages.filter(message => !message.read);
@@ -41,7 +42,7 @@ const Toolbar = ({
 
         <select className="form-control label-select"
           disabled={disabledStatus}
-          onChange={addLabel}
+          onChange={applyLabel}
       >
           <option>Apply label</option>
           <option value="dev">dev</option>
@@ -51,7 +52,7 @@ const Toolbar = ({
 
         <select className="form-control label-select"
           disabled={disabledStatus}
-          onChange={addLabel}
+          onChange={removeLabel}
         >
           <option>Remove label</option>
           <option value="dev">dev</option>
@@ -60,8 +61,9 @@ const Toolbar = ({
         </select>
 
         <button
-          className="btn btn-default" onClick={deleteMessage}
+          className="btn btn-default"
           disabled={disabledStatus}
+          onClick={deleteMessage}
         >
           <i className="fa fa-trash-o"></i>
         </button>

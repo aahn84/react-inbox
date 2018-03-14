@@ -55,7 +55,7 @@ class App extends React.Component {
     })
   }
 
-  deleteMessage = (event, i) => {
+  deleteMessage = (event) => {
     let newState = [...this.state.messages];
     newState = newState.filter(message => !message.selected);
     this.setState({
@@ -63,14 +63,14 @@ class App extends React.Component {
     })
   }
 
-  addLabel = (event, i) => {
-    let label;
-    if (event.target.value !== 'Apply label') label = event.target.value;
-    
+  applyLabel = (event) => {
+    let labelTag;
+    if (event.target.value !== 'Apply label') labelTag = event.target.value;
+
     let newState = [...this.state.messages];
     newState = newState.map(message => {
-      if (message.selected && !message.labels.includes(label)) {
-        message.labels.push(label);
+      if (message.selected && !message.labels.includes(labelTag)) {
+        message.labels.push(labelTag);
       }
       return message;
     })
@@ -78,18 +78,22 @@ class App extends React.Component {
       messages: newState
     })
   }
-  // applyLabel = (e) => {
-  //   let newState = [ ...this.state.messages ];
-  //   newState = newState.map(message => {
-  //     if (message.selected && !message.labels.includes(e.target.value)) {
-  //       message.labels.push(e.target.value);
-  //     }
-  //     return message;
-  //   });
-  //   this.setState({
-  //     messages: newState
-  //   });
-  // }
+
+  removeLabel = (event) => {
+    let labelTag;
+    if (event.target.value !== 'Remove label') labelTag = event.target.value;
+
+    let newState = [...this.state.messages];
+    newState = newState.map(message => {
+      if (message.selected) {
+        message.labels = message.labels.filter(label => label !== labelTag);
+      }
+      return message;
+    })
+    this.setState({
+      messages: newState
+    })
+  }
 
   render() {
     console.log(this.state);
@@ -99,7 +103,8 @@ class App extends React.Component {
           messages={ this.state.messages }
           selectAllMessages={ this.selectAllMessages }
           deleteMessage={ this.deleteMessage }
-          addLabel={ this.addLabel }
+          applyLabel={ this.applyLabel }
+          removeLabel={ this.removeLabel }
         />
         <MessageList
           messages={ this.state.messages }
