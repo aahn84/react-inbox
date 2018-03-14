@@ -2,7 +2,8 @@ import React from 'react'
 
 const Toolbar = ({
   messages,
-  selectAllMessages}) => {
+  selectAllMessages
+}) => {
 
   let unread = messages.filter(message => !message.read);
   let selected = messages.filter(message => message.selected);
@@ -20,7 +21,7 @@ const Toolbar = ({
           unread messages
         </p>
 
-        <button onChange={selectAllMessages} className="btn btn-default">
+        <button onClick={selectAllMessages} className="btn btn-default">
           <i className={selectBoxIcon}></i>
         </button>
 

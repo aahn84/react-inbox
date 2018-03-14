@@ -5,7 +5,8 @@ const MessageList = ({
   messages,
   readMessage,
   selectMessage,
-  starMessage }) => {
+  starMessage
+}) => {
 
   return (
     <div>

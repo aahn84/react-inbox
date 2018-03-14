@@ -14,7 +14,7 @@ const Message = ({
       <div className="col-xs-1">
         <div className="row">
           <div className="col-xs-2">
-            <input type="checkbox" checked={message.selected} onChange={selectMessage}/>
+            <input type="checkbox" checked={!!message.selected} onChange={selectMessage}/>
           </div>
           <div className="col-xs-2">
             <i className={message.starred ? "star fa fa-star-o":"star fa fa-star"} onClick={starMessage}></i>

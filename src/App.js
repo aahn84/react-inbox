@@ -28,9 +28,12 @@ class App extends React.Component {
   }
 
   selectAllMessages = (event) => {
+    console.log(event);
     let newState = [...this.state.messages];
-    // if (!newState[i].selected) newState[i].selected
-    this.setsState({
+    newState.forEach(item => {
+      item.selected = true;
+    })
+    this.setState({
       messages: newState
     })
   }
@@ -55,7 +58,7 @@ class App extends React.Component {
       <div className="Container">
         <Toolbar
           messages={ this.state.messages }
-          selectAll={ this.state.selectAllMessages }
+          selectAllMessages={ this.selectAllMessages }
         />
         <MessageList
           messages={ this.state.messages }
