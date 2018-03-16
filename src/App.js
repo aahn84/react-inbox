@@ -7,7 +7,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // messages: props.messages,
       messages: [],
       fetchingMessages: true,
     }
@@ -20,26 +19,12 @@ class App extends React.Component {
   async getMessages() {
     const getMessages = await fetch(`${process.env.REACT_APP_API_URL}/api/messages`)
     const messagesJson = await getMessages.json();
-    console.log('json', messagesJson);
 
     this.setState({
       messages: messagesJson._embedded.messages,
       fetchingMessages: false,
     })
   }
-
-  // async getItemsAndProducts() {
-  //   const getItems = await fetch(`/api/items`);
-  //   const itemsJson = await getItems.json();
-  //   const getProducts = await fetch(`/api/products`)
-  //   const productsJson = await getProducts.json();
-  //
-  //   this.setState({
-  //     items: itemsJson._embedded.items,
-  //     products: productsJson._embedded.products,
-  //     fetchingProducts: false,
-  //   })
-  // }
 
   readMessage = (event, i) => {
     let newState = [...this.state.messages];
