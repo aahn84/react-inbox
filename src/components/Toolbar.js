@@ -7,7 +7,8 @@ const Toolbar = ({
   markAsUnread,
   deleteMessage,
   applyLabel,
-  removeLabel
+  removeLabel,
+  toggleComposeMessage,
 }) => {
 
   let unread = messages.filter(message => !message.read);
@@ -29,6 +30,10 @@ const Toolbar = ({
           <span className="badge badge">{unread.length}</span>
           unread messages
         </p>
+
+        <a onClick={toggleComposeMessage} className="btn btn-danger">
+          <i className="fa fa-plus"></i>
+        </a>
 
         <button onClick={selectAllMessages} className="btn btn-default">
           <i className={selectBoxIcon}></i>
