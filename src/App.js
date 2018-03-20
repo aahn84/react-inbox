@@ -107,7 +107,6 @@ class App extends React.Component {
     let messageIds = this.state.messages.reduce((ids, message) => {
       return message.selected ? [ ...ids, message.id ] : ids;
     }, []);
-    // console.log(messageIds);
 
     const requestBody = {
       messageIds,
@@ -225,10 +224,7 @@ class App extends React.Component {
   }
 
   toggleComposeMessage = (event) => {
-    console.log(this.state.viewCompose);
-    console.log('CLICKED IT!');
     let newComposeState = this.state.viewCompose;
-    console.log('newComposeState', newComposeState);
     newComposeState = !newComposeState;
 
     this.setState({
@@ -237,29 +233,31 @@ class App extends React.Component {
     })
   }
 
-  getSubject = (event) => {
-    event.preventDefault();
-    return event.target.value;
-    // let newSubject = event.target.value;
-    // console.log('subject', newSubject);
-    // return newSubject;
-  }
-
-  getMessageBody = (event) => {
-    event.preventDefault();
-    return event.target.value;
-    // let newMessageBody = event.target.value;
-    // console.log('body', newMessageBody);
-    // return newMessageBody;
-  }
-
+  // getSubject = (event) => {
+  //   event.preventDefault();
+  //   let newSubject = event.target.value;
+  //   console.log('subject', newSubject);
+  //   // return event.target.value;
+  //   // return newSubject;
+  // }
+  //
+  // getMessageBody = (event) => {
+  //   event.preventDefault();
+  //   // return event.target.value;
+  //   let newMessageBody = event.target.value;
+  //   console.log('body', newMessageBody);
+  //   // return newMessageBody;
+  // }
+  //
   sendMessage = async (event, getSubject, getMessageBody) => {
     event.preventDefault();
     console.log('clicked SEND');
+    console.log('1', getSubject);
+    console.log('2', getMessageBody);
     // let newSubject = getSubject();
     // console.log('new subject', newSubject);
     // let newMessageBody = getMessageBody();
-    // console.log('new body', newMessageBody);
+    // console.log('new body', getMessageBody);
 
     const requestBody = {
       // subject:
@@ -295,11 +293,16 @@ class App extends React.Component {
           removeLabel={ this.removeLabel }
           toggleComposeMessage={ this.toggleComposeMessage }
         />
-        <ComposeForm
+        {/* <ComposeForm
           viewCompose={this.state.viewCompose}
           // toggleComposeMessage={this.toggleComposeMessage}
           getSubject={this.getSubject}
           getMessageBody={this.getMessageBody}
+          sendMessage={ this.sendMessage }
+        /> */}
+        <ComposeForm
+          viewCompose={this.state.viewCompose}
+          toggleComposeMessage={this.toggleComposeMessage}
           sendMessage={ this.sendMessage }
         />
         <MessageList
