@@ -19,11 +19,11 @@ class App extends React.Component {
   async getMessages() {
     const getMessages = await fetch(`${process.env.REACT_APP_API_URL}/api/messages`)
     const messagesJson = await getMessages.json();
-    // console.log('JSON', messagesJson);
+
     this.setState({
       messages: messagesJson._embedded.messages,
       fetchingMessages: false,
-    })
+    });
   }
 
   starMessage = async (event, i) => {
@@ -34,7 +34,7 @@ class App extends React.Component {
       command: 'star',
       star: !this.state.messages[i].starred,
     };
-    // console.log('req', requestBody);
+
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
         method: 'PATCH',
@@ -48,31 +48,30 @@ class App extends React.Component {
     catch(err) {
       console.log(err)
     }
+
     this.getMessages();
     }
 
-    readMessage = async (event, i) => {
-      let messageIds = [this.state.messages[i].id];
+  readMessage = async (event, i) => {
+    let messageIds = [this.state.messages[i].id];
 
-      const requestBody = {
-        messageIds,
-        command: 'read',
-        read: !this.state.messages[i].read,
-      };
+    const requestBody = {
+      messageIds,
+      command: 'read',
+      read: !this.state.messages[i].read,
+    };
 
-      await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
-        method: 'PATCH',
-        body: JSON.stringify(requestBody),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        }
-      })
-      this.getMessages();
-    }
+    await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
 
-  /*
-  */
+    this.getMessages();
+  }
 
   selectMessage = (event, i) => {
     let newState = [...this.state.messages];
@@ -102,16 +101,32 @@ class App extends React.Component {
     })
   }
 
-  markAsRead = (event) => {
-    let newState = [...this.state.messages];
-    newState = newState.map(message => {
-      if (message.selected) message.read = true;
-      return message;
-    });
-    this.setState({
-      messages: newState
+  markAsRead = async (event, i) => {
+    let messageIds = this.state.messages.reduce((ids, message) => {
+      return message.selected ? [ ...ids, message.id ] : ids;
+    }, []);
+    // console.log(messageIds);
+
+    const requestBody = {
+      messageIds,
+      command: 'read',
+      read: true,
+    };
+
+    await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
     })
+
+    this.getMessages();
   }
+
+  /*
+  */
 
   markAsUnread = (event) => {
     let newState = [...this.state.messages];
