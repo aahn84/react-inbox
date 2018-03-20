@@ -148,9 +148,9 @@ class App extends React.Component {
     this.getMessages();
   }
 
+
   /*
   */
-
   deleteMessage = (event) => {
     let newState = [...this.state.messages];
     newState = newState.filter(message => !message.selected);
