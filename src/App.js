@@ -125,19 +125,31 @@ class App extends React.Component {
     this.getMessages();
   }
 
+  markAsUnread = async (event, i) => {
+    let messageIds = this.state.messages.reduce((ids, message) => {
+      return message.selected ? [ ...ids, message.id ] : ids;
+    }, []);
+
+    const requestBody = {
+      messageIds,
+      command: 'read',
+      read: false,
+    }
+
+    await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+
+    this.getMessages();
+  }
+
   /*
   */
-
-  markAsUnread = (event) => {
-    let newState = [...this.state.messages];
-    newState = newState.map(message => {
-      if (message.selected) message.read = false;
-      return message;
-    })
-    this.setState({
-      messages: newState
-    })
-  }
 
   deleteMessage = (event) => {
     let newState = [...this.state.messages];
