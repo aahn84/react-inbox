@@ -43,7 +43,7 @@ class App extends React.Component {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         }
-      })
+      });
     }
     catch(err) {
       console.log(err)
@@ -68,7 +68,7 @@ class App extends React.Component {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       }
-    })
+    });
 
     this.getMessages();
   }
@@ -120,7 +120,7 @@ class App extends React.Component {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       }
-    })
+    });
 
     this.getMessages();
   }
@@ -134,7 +134,7 @@ class App extends React.Component {
       messageIds,
       command: 'read',
       read: false,
-    }
+    };
 
     await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
       method: 'PATCH',
@@ -143,52 +143,108 @@ class App extends React.Component {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       }
-    })
+    });
 
     this.getMessages();
   }
 
+  deleteMessage = async (event, i) => {
+    let messageIds = this.state.messages.reduce((ids, message) => {
+      return message.selected ? [ ...ids, message.id ] : ids;
+    }, []);
 
-  /*
-  */
-  deleteMessage = (event) => {
-    let newState = [...this.state.messages];
-    newState = newState.filter(message => !message.selected);
-    this.setState({
-      messages: newState
-    })
+    const requestBody = {
+      messageIds,
+      command: 'delete',
+    };
+
+    await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    });
+
+    this.getMessages();
   }
 
-  applyLabel = (event) => {
+  applyLabel = async (event) => {
     let labelTag;
     if (event.target.value !== 'Apply label') labelTag = event.target.value;
 
-    let newState = [...this.state.messages];
-    newState = newState.map(message => {
-      if (message.selected && !message.labels.includes(labelTag)) {
-        message.labels.push(labelTag);
+    let messageIds = this.state.messages.reduce((ids, message) => {
+      return message.selected ? [ ...ids, message.id ] : ids;
+    }, []);
+
+    const requestBody = {
+      messageIds,
+      labelTag,
+      command: 'addLabel',
+    };
+
+    await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       }
-      return message;
-    })
-    this.setState({
-      messages: newState
-    })
+    });
+
+    this.getMessages();
+
+    // let labelTag;
+    // if (event.target.value !== 'Apply label') labelTag = event.target.value;
+    //
+    // let newState = [...this.state.messages];
+    // newState = newState.map(message => {
+    //   if (message.selected && !message.labels.includes(labelTag)) {
+    //     message.labels.push(labelTag);
+    //   }
+    //   return message;
+    // })
+    // this.setState({
+    //   messages: newState
+    // })
   }
 
-  removeLabel = (event) => {
+  removeLabel = async (event) => {
     let labelTag;
     if (event.target.value !== 'Remove label') labelTag = event.target.value;
 
-    let newState = [...this.state.messages];
-    newState = newState.map(message => {
-      if (message.selected) {
-        message.labels = message.labels.filter(label => label !== labelTag);
+    let messageIds = this.state.messages.reduce((ids, message) => {
+      return message.selected ? [ ...ids, message.id ] : ids;
+    }, []);
+
+    const requestBody = {
+      messageIds,
+      labelTag,
+      command: 'removeLabel',
+    };
+
+    await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       }
-      return message;
-    })
-    this.setState({
-      messages: newState
-    })
+    });
+
+    this.getMessages();
+
+    // let newState = [...this.state.messages];
+    // newState = newState.map(message => {
+    //   if (message.selected) {
+    //     message.labels = message.labels.filter(label => label !== labelTag);
+    //   }
+    //   return message;
+    // })
+    // this.setState({
+    //   messages: newState
+    // })
   }
 
   render() {
