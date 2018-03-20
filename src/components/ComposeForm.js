@@ -35,8 +35,7 @@ class ComposeForm extends React.Component {
   }
 
   render(){
-    const { viewCompose, newSubject, newMessageBody, sendMessage } = this.props;
-    let toggleCompose = viewCompose ? 'block' : 'none';
+    let toggleCompose = this.props.viewCompose ? 'block' : 'none';
 
     return (
       <div style={ {display: `${toggleCompose}`} }>
