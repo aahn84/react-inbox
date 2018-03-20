@@ -171,8 +171,8 @@ class App extends React.Component {
   }
 
   applyLabel = async (event) => {
-    let labelTag;
-    if (event.target.value !== 'Apply label') labelTag = event.target.value;
+    let label;
+    if (event.target.value !== 'Apply label') label = event.target.value;
 
     let messageIds = this.state.messages.reduce((ids, message) => {
       return message.selected ? [ ...ids, message.id ] : ids;
@@ -180,7 +180,7 @@ class App extends React.Component {
 
     const requestBody = {
       messageIds,
-      labelTag,
+      label,
       command: 'addLabel',
     };
 
@@ -211,8 +211,8 @@ class App extends React.Component {
   }
 
   removeLabel = async (event) => {
-    let labelTag;
-    if (event.target.value !== 'Remove label') labelTag = event.target.value;
+    let label;
+    if (event.target.value !== 'Remove label') label = event.target.value;
 
     let messageIds = this.state.messages.reduce((ids, message) => {
       return message.selected ? [ ...ids, message.id ] : ids;
@@ -220,7 +220,7 @@ class App extends React.Component {
 
     const requestBody = {
       messageIds,
-      labelTag,
+      label,
       command: 'removeLabel',
     };
 
