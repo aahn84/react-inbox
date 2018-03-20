@@ -11,7 +11,6 @@ class ComposeForm extends React.Component {
 
   getSubject = (event) => {
     let newSubject = event.target.value;
-    // console.log('subject', newSubject);
 
     this.setState({
       subject: newSubject
@@ -20,7 +19,6 @@ class ComposeForm extends React.Component {
 
   getMessageBody = (event) => {
     let newMessageBody = event.target.value;
-    // console.log('body', newMessageBody);
 
     this.setState({
       body: newMessageBody
@@ -36,46 +34,11 @@ class ComposeForm extends React.Component {
     }
   }
 
-  // sendMessage = async (event) => {
-  //   event.preventDefault();
-  //   console.log('clicked SEND');
-  //   console.log('1', getSubject);
-  //   console.log('2', getMessageBody);
-  //   // let newSubject = getSubject();
-  //   // console.log('new subject', newSubject);
-  //   // let newMessageBody = getMessageBody();
-  //   // console.log('new body', getMessageBody);
-  //
-  //   const requestBody = {
-  //     // subject:
-  //     // body:
-  //     read: false,
-  //     starred: false,
-  //     labels: [],
-  //   }
-  //
-  //   await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
-  //     method: 'POST',
-  //     body: JSON.stringify(requestBody),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json',
-  //     }
-  //   });
-  //
-  //   this.getMessages();
-  // }
-
   render(){
-    console.log(this.state);
-    // console.log(this.state.viewCompose);
     const { viewCompose, newSubject, newMessageBody, sendMessage } = this.props;
-    // console.log('ha', viewCompose);
-    // let toggleCompose = this.state.viewCompose ? 'block' : 'none';
     let toggleCompose = viewCompose ? 'block' : 'none';
 
     return (
-      // <div>
       <div style={ {display: `${toggleCompose}`} }>
         <form className="form-horizontal well">
           <div className="form-group">

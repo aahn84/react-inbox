@@ -233,36 +233,10 @@ class App extends React.Component {
     })
   }
 
-  // getSubject = (event) => {
-  //   event.preventDefault();
-  //   let newSubject = event.target.value;
-  //   console.log('subject', newSubject);
-  //   // return event.target.value;
-  //   // return newSubject;
-  // }
-  //
-  // getMessageBody = (event) => {
-  //   event.preventDefault();
-  //   // return event.target.value;
-  //   let newMessageBody = event.target.value;
-  //   console.log('body', newMessageBody);
-  //   // return newMessageBody;
-  // }
-  //
   sendMessage = async (message) => {
-    // event.preventDefault();
     console.log('clicked SEND');
-    console.log(message);
     console.log(message.subject);
     console.log(message.body);
-
-    // const requestBody = {
-    //   subject: message.subject,
-    //   body: message.body,
-    //   read: false,
-    //   starred: false,
-    //   labels: [],
-    // }
 
     await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
       method: 'POST',
@@ -294,13 +268,6 @@ class App extends React.Component {
           removeLabel={ this.removeLabel }
           toggleComposeMessage={ this.toggleComposeMessage }
         />
-        {/* <ComposeForm
-          viewCompose={this.state.viewCompose}
-          // toggleComposeMessage={this.toggleComposeMessage}
-          getSubject={this.getSubject}
-          getMessageBody={this.getMessageBody}
-          sendMessage={ this.sendMessage }
-        /> */}
         <ComposeForm
           viewCompose={this.state.viewCompose}
           toggleComposeMessage={this.toggleComposeMessage}
