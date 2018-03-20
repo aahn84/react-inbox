@@ -19,7 +19,7 @@ class App extends React.Component {
   async getMessages() {
     const getMessages = await fetch(`${process.env.REACT_APP_API_URL}/api/messages`)
     const messagesJson = await getMessages.json();
-    console.log('JSON', messagesJson);
+    // console.log('JSON', messagesJson);
     this.setState({
       messages: messagesJson._embedded.messages,
       fetchingMessages: false,
@@ -27,14 +27,14 @@ class App extends React.Component {
   }
 
   starMessage = async (event, i) => {
-    let messageIds = [this.state.messages[i].id]
+    let messageIds = [this.state.messages[i].id];
 
     const requestBody = {
       messageIds,
       command: 'star',
       star: !this.state.messages[i].starred,
     };
-    console.log('req', requestBody);
+    // console.log('req', requestBody);
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
         method: 'PATCH',
@@ -44,52 +44,35 @@ class App extends React.Component {
           'Accept': 'application/json',
         }
       })
-    } catch(e) {
-      console.log(e)
+    }
+    catch(err) {
+      console.log(err)
+    }
+    this.getMessages();
     }
 
+    readMessage = async (event, i) => {
+      let messageIds = [this.state.messages[i].id];
+
+      const requestBody = {
+        messageIds,
+        command: 'read',
+        read: !this.state.messages[i].read,
+      };
+
+      await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
+        method: 'PATCH',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }
+      })
       this.getMessages();
     }
 
-    // const starBody = {
-    //   messageIds,
-    //   command: 'star',
-    //   star: !this.state.messages[i].starred
-    // };
-
-  //   let newState = [...this.state.messages];
-  //   newState[i].starred = !newState[i].starred;
-  //   this.setState({
-  //     messages: newState
-  //   })
-  // }
-
-/*
-  addItem = async event => {
-    event.persist();
-    event.preventDefault();
-    const eventProductId = parseInt(event.target.productId.value, 10);
-    const eventQuantity = parseInt(event.target.quantity.value, 10);
-
-    await fetch(`/api/products/${eventProductId}/items`, {
-      method: 'POST',
-      body: JSON.stringify({quantity: eventQuantity}),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }
-    })
-    this.getItemsAndProducts();
-  }
-*/
-
-  readMessage = (event, i) => {
-    let newState = [...this.state.messages];
-    newState[i].read = !newState[i].read;
-    this.setState({
-      messages: newState
-    })
-  }
+  /*
+  */
 
   selectMessage = (event, i) => {
     let newState = [...this.state.messages];
@@ -182,7 +165,7 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('this.state', this.state.messages);
+    // console.log('this.state', this.state.messages);
     return (
       <div className="Container">
         <Toolbar
