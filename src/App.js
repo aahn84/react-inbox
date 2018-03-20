@@ -249,32 +249,33 @@ class App extends React.Component {
   //   // return newMessageBody;
   // }
   //
-  sendMessage = async (event, getSubject, getMessageBody) => {
-    event.preventDefault();
+  sendMessage = async (message) => {
+    // event.preventDefault();
     console.log('clicked SEND');
-    console.log('1', getSubject);
-    console.log('2', getMessageBody);
-    // let newSubject = getSubject();
-    // console.log('new subject', newSubject);
-    // let newMessageBody = getMessageBody();
-    // console.log('new body', getMessageBody);
+    console.log(message);
+    console.log(message.subject);
+    console.log(message.body);
 
-    const requestBody = {
-      // subject:
-      // body:
-      read: false,
-      starred: false,
-      labels: [],
-    }
+    // const requestBody = {
+    //   subject: message.subject,
+    //   body: message.body,
+    //   read: false,
+    //   starred: false,
+    //   labels: [],
+    // }
 
     await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
       method: 'POST',
-      body: JSON.stringify(requestBody),
+      body: JSON.stringify(message),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       }
     });
+
+    this.setState({
+      viewCompose: false,
+    })
 
     this.getMessages();
   }

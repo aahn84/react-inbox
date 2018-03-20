@@ -1,40 +1,39 @@
 import React from 'react'
 
 class ComposeForm extends React.Component {
-  constructor({ viewCompose, toggleComposeMessage, sendMessage }) {
-    super({ viewCompose, toggleComposeMessage, sendMessage });
+  constructor(props) {
+    super(props);
     this.state = {
-      viewCompose: this.props.viewCompose,
-      newSubject: '',
-      newMessageBody: '',
-      // sendMessage: {},
+      subject: '',
+      body: '',
     }
   }
 
-  // toggleComposeMessage = (event) => {
-  //   let newComposeState = this.state.viewCompose;
-  //   newComposeState = !newComposeState;
-  //
-  //   this.setState({
-  //     ...this.state,
-  //     viewCompose: newComposeState,
-  //   })
-  // }
-
   getSubject = (event) => {
-    // event.preventDefault();
     let newSubject = event.target.value;
-    console.log('subject', newSubject);
-    // return event.target.value;
-    // return newSubject;
+    // console.log('subject', newSubject);
+
+    this.setState({
+      subject: newSubject
+    });
   }
 
   getMessageBody = (event) => {
-    // event.preventDefault();
-    // return event.target.value;
     let newMessageBody = event.target.value;
-    console.log('body', newMessageBody);
-    // return newMessageBody;
+    // console.log('body', newMessageBody);
+
+    this.setState({
+      body: newMessageBody
+    });
+  }
+
+  handleSendButton = (event) => {
+    event.preventDefault();
+    let newMessage = { ...this.state };
+
+    if (newMessage.subject && newMessage.body) {
+      this.props.sendMessage(newMessage);
+    }
   }
 
   // sendMessage = async (event) => {
@@ -68,10 +67,10 @@ class ComposeForm extends React.Component {
   // }
 
   render(){
-    // console.log(this.props);
+    console.log(this.state);
     // console.log(this.state.viewCompose);
     const { viewCompose, newSubject, newMessageBody, sendMessage } = this.props;
-    console.log('ha', viewCompose);
+    // console.log('ha', viewCompose);
     // let toggleCompose = this.state.viewCompose ? 'block' : 'none';
     let toggleCompose = viewCompose ? 'block' : 'none';
 
@@ -98,7 +97,7 @@ class ComposeForm extends React.Component {
           </div>
           <div className="form-group">
             <div className="col-sm-8 col-sm-offset-2">
-              <input onClick={ (e) => {sendMessage(e)} } type="submit" value="Send" className="btn btn-primary"></input>
+              <input onClick={ this.handleSendButton } type="submit" value="Send" className="btn btn-primary"></input>
             </div>
           </div>
         </form>
