@@ -2,15 +2,19 @@ import React from 'react'
 import Toolbar from './components/Toolbar'
 import MessageList from './components/MessageList'
 import ComposeForm from './components/ComposeForm'
-import './App.css';
+import './App.css'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       messages: [],
-      viewCompose: false,
       fetchingMessages: true,
+      viewComposeForm: false,
+      composeFormContent: {
+        subject: '',
+        body: '',
+      },
     }
   }
 
@@ -224,23 +228,54 @@ class App extends React.Component {
   }
 
   toggleComposeMessage = (event) => {
-    let newComposeState = this.state.viewCompose;
+    let newComposeState = this.state.viewComposeForm;
     newComposeState = !newComposeState;
 
     this.setState({
       ...this.state,
-      viewCompose: newComposeState,
+      viewComposeForm: newComposeState,
+      composeFormContent: {
+        subject: '',
+        body: '',
+      },
     })
   }
 
-  sendMessage = async (message) => {
-    console.log('clicked SEND');
-    console.log(message.subject);
-    console.log(message.body);
+  setSubject = (event) => {
+    let newSubject = event.target.value;
+    // console.log('new subj', newSubject);
+
+    this.setState({
+      composeFormContent: {
+        ...this.state.composeFormContent,
+        subject: newSubject,
+      }
+    });
+  }
+
+  setMessageBody = (event) => {
+    let newMessageBody = event.target.value;
+    // console.log('new bod', newMessageBody);
+
+    this.setState({
+      composeFormContent: {
+        ...this.state.composeFormContent,
+        body: newMessageBody,
+      }
+    });
+  }
+
+  sendMessage = async (event) => {
+    event.preventDefault();
+
+    let newMessage = this.state.composeFormContent;
+    if (!newMessage.subject || !newMessage.body) return;
+    // console.log('clicked SEND');
+    // console.log('1', this.state.composeFormContent);
 
     await fetch(`${process.env.REACT_APP_API_URL}/api/messages`, {
       method: 'POST',
-      body: JSON.stringify(message),
+      body: JSON.stringify(newMessage),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -248,7 +283,11 @@ class App extends React.Component {
     });
 
     this.setState({
-      viewCompose: false,
+      viewComposeForm: false,
+      composeFormContent: {
+        subject: '',
+        body: '',
+      }
     })
 
     this.getMessages();
@@ -256,6 +295,7 @@ class App extends React.Component {
 
   render() {
     // console.log('this.state', this.state.messages);
+    // console.log('2', this.state.composeFormContent);
     return (
       <div className="Container">
         <Toolbar
@@ -269,8 +309,11 @@ class App extends React.Component {
           toggleComposeMessage={ this.toggleComposeMessage }
         />
         <ComposeForm
-          viewCompose={this.state.viewCompose}
-          toggleComposeMessage={this.toggleComposeMessage}
+          viewComposeForm={ this.state.viewComposeForm }
+          toggleComposeMessage={ this.toggleComposeMessage }
+          setSubject={ this.setSubject }
+          setMessageBody={ this.setMessageBody }
+          composeFormContent={ this.composeFormContent }
           sendMessage={ this.sendMessage }
         />
         <MessageList
